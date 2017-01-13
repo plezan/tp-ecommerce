@@ -1,7 +1,7 @@
 <form method="post">
 	<fieldset>
 		<label>prénom</label>
-		<input type="text" name="prénom"><br/>
+		<input type="text" name="prenom"><br/>
 		<label>nom</label>
 		<input type="text" name="nom"><br/>
 		<label>email</label>
