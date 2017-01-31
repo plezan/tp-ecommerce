@@ -1,5 +1,5 @@
 <?php
-	session_start();
+	
 	require_once("controllers/HeadController.php");
 	$head = new HeadController();
 	require_once('controllers/MenuController.php');
@@ -8,51 +8,47 @@
 	$head->head();
 	$menu->menu();
 
+if( !isset($_SESSION['login']) || $_SESSION['login'] == 0 ){ // Si non connecté
 
+	if (isset($_GET['verify']) && $_GET['verify'] == true && isset($_POST["id"]) && isset($_POST["pwd"])) { // si demande de connection et informations presentes
+	  	echo "<h2>Verification des information de connection</h2>";
 
-	if (!empty($_GET)) {
-		if (!isset($_POST["login"])) {
-			$_SESSION['admin'] = false;
-			$_POST["id"] = "";
+	  	require_once('classes/db.php');
+		$instancedb = DB::getinstance();
+		$req = $instancedb->bdd->query("SELECT * FROM user WHERE user_email LIKE '".$_POST["id"]."'");
+		$result = $req->fetch();
+		echo "req = ";
+		echo $result['user_password']."<br>User grade = ";
+		echo $result['user_grade']."<br>Mot de passe = ";
+		echo $_POST['pwd']."<br>";
+		if (password_verify($_POST["pwd"],$result['user_password'])) {
+			echo "bon mot de passe";
+			$_SESSION['login'] = $result['user_grade']+1;
+		} else {
+			echo "mauvais identifiant ou mot de passe";
+			$_SESSION['login'] = 0;
 		}
-	}else{
 
-		if ($_SESSION['admin']==true || !empty($_POST)) {
-			echo "vous etes connectés en temps qu'admin ";
-			echo "<a href='?deconnection=true'>Se deconnter</a>";
-		}else{
-?>
-			<form action="login.php" method="post">
-				<label>Nom d'utilisateur</label>
-				<input type="text" name="id" value=""></input>
-				<label>Mot de passe</label>
-				<input type="password" name="pwd" value=""></input>
-				<input type="submit" value="send"/>
-				
 
-<?php
-		}
-	}
-	if(!empty($_POST)){
-		if($_POST["id"] == "admin" && $_POST["pwd"] == "admin" ){
-			$_SESSION['admin'] = true;
-			echo '<input type="hidden" name="login" value="1"/>';
-			$_GET["login"]=1;
-		}else{
-			$_SESSION['admin'] = false;
-		}
-	}
+	  } else {
+	  	echo "<h2>formulaire de connection</h2>";
+	  	require_once('views/login/form.php');
+	  }
 
-?>
-			</form>
-<?php 
-if(!empty($_POST)){
-		if($_SESSION['admin'] == true){
-			echo "toi = admin";
-		}else{
-			echo "toi != admin";
-		}
-	}
+} elseif ($_SESSION['login'] == 1 || $_SESSION['login'] == 2 ) { // si connecte en temps qu'admin ou utilisateur
+	
+	if (isset($_GET['unlog']) && $_GET['unlog'] == true ) {
+	  	echo "<h2>Déconnection</h2>";
+	  	$_SESSION['login'] = 0;
+	  } else {
+	  	echo "<h2>redirection vers  l'acceuil</h2>";
+	  }
+
+} else {
+	echo "what's going on ?";
+}
+
+
 ?>
 
 	

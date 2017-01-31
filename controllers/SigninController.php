@@ -10,9 +10,7 @@ class SigninController {
 
 		if(!empty($_POST)){
 			$modelSignin->addUser();
-
 		}
-
 	}
 }
 ?>

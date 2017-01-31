@@ -1,5 +1,5 @@
 <?php
-	session_start();
+	/*session_start();
 	require_once("controllers/HeadController.php");
 	$head = new HeadController();
 	require_once('controllers/MenuController.php');
@@ -10,12 +10,12 @@
 
 if(!empty($_POST)){
 					if($_POST["id"] == "admin" && $_POST["pwd"] == "admin" ){
-						$_SESSION['admin'] = true;
+						$_SESSION['admin'] = 1;
 						echo "<p>admin</p><br>";
 						$_GET["login"]=1;
 					}else{
-						$_SESSION['admin'] = false;
-						echo "<p>!admin</p><br>";
+						$_SESSION['admin'] = 0;
+						echo "<p>!=admin</p><br>";
 					}
 				}
 
@@ -23,7 +23,7 @@ if(!empty($_POST)){
 	if (!empty($_GET) && ( isset($_GET['login']) || isset($_GET['logout']))) {//si login ou logout
 		if (isset($_GET['login'])) {
 			echo "login";
-			if (isset($_SESSION)&&$_SESSION['admin']!=true||!isset($_SESSION)) {
+			if (!isset($_SESSION["admin"])||(isset($_SESSION)&&$_SESSION['admin']!=1)) {
 				echo "vous n'êtes pas connectés"; 
 				?>
 
@@ -40,10 +40,10 @@ if(!empty($_POST)){
 			
 		}elseif (isset($_GET['logout'])) {
 			echo "logout";
-			$_SESSION['admin']=false;
+			$_SESSION['admin']=0;
 		}
 	}else{//sinon
 			echo "loged";
 	}
-	
+	*/
 ?>

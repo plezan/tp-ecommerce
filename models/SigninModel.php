@@ -12,7 +12,7 @@ class SigninModel{
 			'prenom' => $_POST['prenom'],
 			'email' => $_POST['email'],
 			'adress' => $_POST['adress'],
-			'password' => password_hash($_POST['user_password'], PASSWORD_DEFAULT)."\n"
+			'password' => password_hash($_POST['user_password'], PASSWORD_DEFAULT)
 		));
 	} else {echo"Vos devez remplir le text";}
 
