@@ -10,7 +10,7 @@
 		<label>adresse</label>
 		<input type="text" name="adress"><br/>
 		<label>mot de passe</label>
-		<input type="user_password" name="user_password"><br/>
+		<input type="password" name="user_password"><br/>
 		<input type="submit">
 	</fieldset>
 </form>

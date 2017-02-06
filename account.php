@@ -1,49 +1,21 @@
 <?php
-	/*session_start();
+	session_start();
 	require_once("controllers/HeadController.php");
 	$head = new HeadController();
+	$head->head();
 	require_once('controllers/MenuController.php');
 	$menu = new MenuController();
-	
-	$head->head();//head de la page web
-	$menu->menu();//menu
+	$menu->menu();
+	require_once('controllers\Account\AdminController.php');
+	$AdminController = new AdminController();
+	if( !isset($_SESSION["login"]) || $_SESSION["login"] == 0 ) { ?>
+		<h2> Vous devez etre connectés </h2>	 
+	<?php } else if( $_SESSION["login"] == 1   ){ ?>
 
-if(!empty($_POST)){
-					if($_POST["id"] == "admin" && $_POST["pwd"] == "admin" ){
-						$_SESSION['admin'] = 1;
-						echo "<p>admin</p><br>";
-						$_GET["login"]=1;
-					}else{
-						$_SESSION['admin'] = 0;
-						echo "<p>!=admin</p><br>";
-					}
-				}
+		<h2> Pannel Utilisateur </h2>
 
+	<?php } else if( $_SESSION["login"] == 2 ){ ?>
 
-	if (!empty($_GET) && ( isset($_GET['login']) || isset($_GET['logout']))) {//si login ou logout
-		if (isset($_GET['login'])) {
-			echo "login";
-			if (!isset($_SESSION["admin"])||(isset($_SESSION)&&$_SESSION['admin']!=1)) {
-				echo "vous n'êtes pas connectés"; 
-				?>
-
-				<form action="" method="post">
-				<label>Nom d'utilisateur</label>
-				<input type="text" name="id" value=""/>S
-				<label>Mot de passe</label>
-				<input type="password" name="pwd" value=""/>
-				<input type="submit" value="send"/>
-				</form>
-
-				<?php
-			}
-			
-		}elseif (isset($_GET['logout'])) {
-			echo "logout";
-			$_SESSION['admin']=0;
-		}
-	}else{//sinon
-			echo "loged";
-	}
-	*/
-?>
+		<h2> Pannel Admin </h2>
+		<?php $AdminController->adminTab();
+	} ?>

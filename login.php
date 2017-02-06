@@ -12,7 +12,7 @@ if( !isset($_SESSION['login']) || $_SESSION['login'] == 0 ){ // Si non connecté
 
 	if (isset($_GET['verify']) && $_GET['verify'] == true && isset($_POST["id"]) && isset($_POST["pwd"])) { // si demande de connection et informations presentes
 	  	echo "<h2>Verification des information de connection</h2>";
-
+	  	header('Location: account.php');
 	  	require_once('classes/db.php');
 		$instancedb = DB::getinstance();
 		$req = $instancedb->bdd->query("SELECT * FROM user WHERE user_email LIKE '".$_POST["id"]."'");
@@ -40,8 +40,10 @@ if( !isset($_SESSION['login']) || $_SESSION['login'] == 0 ){ // Si non connecté
 	if (isset($_GET['unlog']) && $_GET['unlog'] == true ) {
 	  	echo "<h2>Déconnection</h2>";
 	  	$_SESSION['login'] = 0;
+	  	header('Location: index.php');
 	  } else {
-	  	echo "<h2>redirection vers  l'acceuil</h2>";
+	  	echo "<h2>redirection vers le pannel user/admin</h2>";
+	  	header("Location: account.php");
 	  }
 
 } else {

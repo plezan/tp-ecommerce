@@ -6,7 +6,7 @@ class SigninModel{
 		$requete = $instancedb->bdd->prepare('INSERT INTO user(user_nom,user_prenom,user_email,user_adress,user_password) VALUES (:nom,:prenom,:email,:adress,:password)');
 
 	if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email'])&& isset($_POST['adress']) && isset($_POST['user_password'])) {
-		echo "Nom, Contenu et Date Présents";
+		echo "Donnes completes";
 		$requete->execute(array(
 			'nom' => $_POST['nom'],
 			'prenom' => $_POST['prenom'],
