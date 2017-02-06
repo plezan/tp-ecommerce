@@ -5,7 +5,11 @@ class HeadController {
 	{
 		$titre = "Mon E-commerce";
 		$styles = [
-			"views/menu/menu.css"
+			"views/menu/menu.css",
+			"views/admin/style.css"
+		];
+		$scripts = [
+			"views/admin/script.js"
 		];
 		require_once('views/head/head.php');
 	}
