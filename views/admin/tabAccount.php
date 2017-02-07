@@ -7,7 +7,7 @@
  </tr>
 <?php foreach($listUser as $user){ ?>
   <tr>
-  	<td><?php echo $user['user_id']; ?></td>
+  	<td id=<?php echo $user['user_id']; ?>><?php echo $user['user_id']; ?></td>
     <td><?php echo $user['user_firstName']." ".$user['user_lastName']; ?></td>
     <td>
     	<a href= <?php echo "?changeGrade=".$user['user_id']."&grade=".($user['user_grade']+1)%2; ?> >

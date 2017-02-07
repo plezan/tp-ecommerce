@@ -10,7 +10,7 @@
 	$AdminController = new AdminController();
 	if( !isset($_SESSION["login"]) || $_SESSION["login"] == 0 ) { ?>
 		<h2> Vous devez etre connectés </h2>	 
-	<?php } else if( $_SESSION["login"] == 1   ){ ?>
+	<?php } else if( $_SESSION["login"] == 1 ){ ?>
 
 		<h2> Pannel Utilisateur </h2>
 

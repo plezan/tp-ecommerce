@@ -24,6 +24,13 @@ $tabs = array("Account", "Article", "Stock");
     </div>
 </div>
 <script type="text/javascript">
-    var old_Tab = <?php echo '"'.$tabs[0].'"' ?>;
+    var old_Tab = 
+    <?php
+        $tabOnLoad = 0;
+        if( !empty($_GET['tab'])) {
+            $tabOnLoad = $_GET['tab'];
+        }
+        echo '"'.$tabs[$tabOnLoad].'"'; 
+    ?>;
     change_tab(old_Tab);
 </script>
