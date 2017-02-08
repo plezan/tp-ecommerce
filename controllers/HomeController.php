@@ -6,11 +6,16 @@ class HomeController {
 	{
 		require_once('models/ArticleModel.php');
 		$modelArticle = new ArticleModel();
-		$listProduit = $modelArticle->listArticles();
-		require_once('views/home/homepage.php');
 
+		if (isset($_GET["cat"])) {
 
+			$listProduit = $modelArticle->listArticles($_GET["cat"]);
+			require_once('views/home/articles.php');
 
+		} else {
+			$listCategorie = $modelArticle->listCategorie();
+			require_once('views/home/homepage.php');
+		}
 	}
 }
 ?>

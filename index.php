@@ -6,10 +6,9 @@
 	$menu = new MenuController();
 	$menu->menu();
 	echo "Work In Progress ...";
-	if (empty($_GET)){
-		require_once('controllers/HomeController.php');
-		$home = new HomeController();
-		
-		$home->homepage();
-	}
+	require_once('controllers/HomeController.php');
+	$home = new HomeController();
+	
+	$home->homepage();
+
 ?>
