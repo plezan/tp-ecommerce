@@ -11,7 +11,7 @@ if (isset ( $_GET ["article_id"] )) {
 	$nom = $article [0] ['art_name'];
 	$contenu = $article [0] ['art_description'];
 	$price = $article [0] ['art_price'];
-	
+	$cat = $article [0] ['cat_id'];
 	$requete = $instancedb->bdd->query ( "SELECT * FROM category");
 	$categories = $requete->fetchAll ();
 	
@@ -26,9 +26,12 @@ if (isset ( $_GET ["article_id"] )) {
 		<option label="hors categorie" value="null"></option>
 		<?php foreach ($categories as $categorie) { ?>
           <option label=
-          <?php echo ('"'.$categorie['cat_name'].'"'); ?>
-           value=
-           <?php echo ('"'.$categorie['cat_id'].'"'); ?> 
+          			<?php echo ('"'.$categorie['cat_name'].'"'); ?>
+           		value=
+           			<?php echo ('"'.$categorie['cat_id'].'" '); ?>
+           		<?php if($cat == $categorie['cat_id']) {
+           			echo ("selected ");  
+           		} ?>
           >
           
           </option>
@@ -52,16 +55,17 @@ if (isset ( $_GET ["article_id"] )) {
 <?php
 }
 $instancedb = DB::getinstance ();
-$requete = $instancedb->bdd->prepare ( 'UPDATE article SET art_name = :nom, art_description = :contenu, art_price = :price, cat_id = :cat WHERE art_id = :id' );
+$requete = $instancedb->bdd->prepare ("UPDATE `article` SET `art_name` = :nom, `art_description` = :contenu, `art_price` = :price, `cat_id` = :categ WHERE `article`.`art_id` = :id");
 
 if (isset ( $_GET ['Nom'] ) && isset ( $_GET ['Contenu'] ) && isset ( $_GET ['Price'] ) && isset($_GET ['Category']) ) {
-	
+	echo "Category defined";
 	$requete->execute ( array (
 			'nom' => $_GET ['Nom'],
 			'contenu' => $_GET ['Contenu'],
 			'price' => $_GET ['Price'],
-			'id' => $_GET ['article_id'],
-			'cat' => $_GET ['Category']
+			'categ' => $_GET ['Category'],
+			'id' => $_GET ['article_id']
+			
 	) );
 	 header("Location: index.php");
 }
