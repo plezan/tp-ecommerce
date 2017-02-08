@@ -1,5 +1,5 @@
 <?php 
-$tabs = array("Account", "Article", "Stock");
+$tabs = array("Account", "Article", "Stock","Categorie");
  ?>
 <div class="systeme_onglets">
     <div class="onglets">
