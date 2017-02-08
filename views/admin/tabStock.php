@@ -1,16 +1,50 @@
-<table>
-<tr>
-  	<th>ID</th>
-    <th>Name</th>
-    <th>Price</th> 
-    <th>Action</th>
- </tr>
-<?php foreach($listProduit as $produit){ ?>
-  <tr>
-  	<td id=<?php echo $produit['art_id']; ?>><?php echo $produit['art_id']; ?></td>
-    <td><?php echo $produit['art_name']; ?></td>
-    <td><?php echo $produit['art_price'] ?></td> 
-    <td>nothing</td>
-  </tr>
-<?php } ?>
-</table>
+<?php
+  //include_once('includes/database.php');
+require_once('classes/db.php');
+
+  if(isset($_GET["article_id"])){
+    
+      $instancedb = DB::getinstance();
+      $requete = $instancedb->bdd->query("SELECT * FROM article WHERE art_id =".$_GET["article_id"]);
+    $article = $requete->fetchAll();
+    $id = $_GET['article_id'];
+    $nom = $article[0]['art_name'];
+    $contenu = $article[0]['art_description'];
+    $price = $article[0]['art_price'];
+?>
+
+  <form action="">
+    <label>Nom :</label>
+    <input type="text" name="Nom" placeholder="Article sans titre" <?php if(isset($nom)): ?> value="<?= $nom ?>" <?php endif; ?> >
+    <br>
+    <label>Contenu :</label>
+    <textarea name="Contenu" rows="10" cols="30" placeholder=" Texte de l'article "><?php if(isset($contenu)): ?> <?= $contenu ?> <?php endif; ?></textarea>
+    <br>
+    <label>Price :</label>
+    <input type="text" name="Price" <?php if(isset($price)): ?> value="<?= $price ?>" <?php endif; ?> >
+    <input type="hidden" name="article_id"<?php if(isset($id)): ?> value="<?= $id ?>" <?php endif; ?>>
+    <input type="submit">
+  </form>
+<?php  } else { ?>
+  <form method="GET">
+    <label>Id</label>
+    <input type="text" name="article_id" />
+    <input type="hidden" name="tab" value="2"/>
+    <input type="submit"/>
+  </form>
+<?php
+}
+  $instancedb = DB::getinstance();
+  $requete = $instancedb->bdd->prepare('UPDATE article SET art_name = :nom, art_description = :contenu, art_price = :price WHERE art_id = :id');
+
+  if (isset($_GET['Nom']) && isset($_GET['Contenu']) && isset($_GET['Price'])) {
+
+    $requete->execute(array(
+      'nom' => $_GET['Nom'],
+      'contenu' => $_GET['Contenu'],
+      'price' => $_GET['Price'],
+      'id' => $_GET['article_id']
+    ));
+    header("Location: index.php");
+  }
+?>
