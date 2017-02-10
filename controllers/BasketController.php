@@ -48,7 +48,6 @@ class BasketController {
 
 	public function basketConfirm() {
 
-		var_dump($_SESSION["pannier"]);
 		require_once('views/basket/form.php');
 		if (isset($_POST['adress']) && isset($_POST['city']) && isset($_POST['zip'])) {
 			require_once('classes/db.php');
@@ -64,10 +63,6 @@ class BasketController {
 
 			$requete = $instancedb->bdd->query ( "SELECT * FROM `ordering` WHERE `order_id` = LAST_INSERT_ID() ");
 			$orderInserted = $requete->fetch();
-
-			var_dump($orderInserted);
-			echo "<br>";
-			var_dump($_SESSION['pannier']);
 
 		foreach ($_SESSION['pannier'] as $item) {
 			for ($i=0; $i < $item['qty']; $i++) { 
