@@ -12,7 +12,7 @@ if (isset ( $_GET ["article_id"] )) {
 	$contenu = $article [0] ['art_description'];
 	$price = $article [0] ['art_price'];
 	$cat = $article [0] ['cat_id'];
-	$requete = $instancedb->bdd->query ( "SELECT * FROM category");
+	$requete = $instancedb->bdd->query ( "SELECT * FROM category" );
 	$categories = $requete->fetchAll ();
 	
 	?>
@@ -21,23 +21,19 @@ if (isset ( $_GET ["article_id"] )) {
 
 
 
-	<label>Categorie :</label>
-	 <select name="Category">
+	<label>Categorie :</label> <select name="Category">
 		<option label="hors categorie" value="null"></option>
 		<?php foreach ($categories as $categorie) { ?>
-          <option label=
-          			<?php echo ('"'.$categorie['cat_name'].'"'); ?>
-           		value=
-           			<?php echo ('"'.$categorie['cat_id'].'" '); ?>
-           		<?php if($cat == $categorie['cat_id']) {
-           			echo ("selected ");  
-           		} ?>
-          >
-          
-          </option>
+          <option label=<?php echo ('"'.$categorie['cat_name'].'"'); ?>
+			value=<?php echo ('"'.$categorie['cat_id'].'" '); ?>
+			<?php
+		
+		if ($cat == $categorie ['cat_id']) {
+			echo ("selected ");
+		}
+		?>></option>
         <?php } ?>
-	</select>
-	<label>Nom :</label> <input type="text" name="Nom"
+	</select> <label>Nom :</label> <input type="text" name="Nom"
 		placeholder="Article sans titre" <?php if(isset($nom)): ?>
 		value="<?= $nom ?>" <?php endif; ?>> <br> <label>Contenu :</label>
 	<textarea name="Contenu" rows="10" cols="30"
@@ -55,18 +51,17 @@ if (isset ( $_GET ["article_id"] )) {
 <?php
 }
 $instancedb = DB::getinstance ();
-$requete = $instancedb->bdd->prepare ("UPDATE `article` SET `art_name` = :nom, `art_description` = :contenu, `art_price` = :price, `cat_id` = :categ WHERE `article`.`art_id` = :id");
+$requete = $instancedb->bdd->prepare ( "UPDATE `article` SET `art_name` = :nom, `art_description` = :contenu, `art_price` = :price, `cat_id` = :categ WHERE `article`.`art_id` = :id" );
 
-if (isset ( $_GET ['Nom'] ) && isset ( $_GET ['Contenu'] ) && isset ( $_GET ['Price'] ) && isset($_GET ['Category']) ) {
+if (isset ( $_GET ['Nom'] ) && isset ( $_GET ['Contenu'] ) && isset ( $_GET ['Price'] ) && isset ( $_GET ['Category'] )) {
 	echo "Category defined";
 	$requete->execute ( array (
 			'nom' => $_GET ['Nom'],
 			'contenu' => $_GET ['Contenu'],
 			'price' => $_GET ['Price'],
 			'categ' => $_GET ['Category'],
-			'id' => $_GET ['article_id']
-			
+			'id' => $_GET ['article_id'] 
 	) );
-	 header("Location: index.php");
+	header ( "Location: index.php" );
 }
 ?>

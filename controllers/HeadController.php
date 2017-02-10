@@ -6,7 +6,7 @@ class HeadController {
 		$titre = "Mon E-commerce";
 		$styles = [
 			"views/menu/menu.css",
-			"views/admin/style.css"
+			"views/admin/tabs.css"
 		];
 		$scripts = [
 			"views/admin/script.js"
