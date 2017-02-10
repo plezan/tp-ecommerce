@@ -27,9 +27,15 @@ class ArticleModel{
 			$resultat = $requete->fetch();
 			return $resultat;
 		}else return null;
-		
-		
 	}
-	
+	public function getNbArticle($id){
+		require_once('classes/db.php');
+		$instancedb = DB::getinstance();
+		$requete = $instancedb->bdd->query("SELECT COUNT(art_id) AS nb FROM article WHERE mod_id=".$id);
+		if (!empty($requete)) {
+			$resultat = $requete->fetch();
+			return $resultat;
+		}else return null;
+	}
 }
 ?>

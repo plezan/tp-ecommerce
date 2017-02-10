@@ -10,10 +10,20 @@ if (empty ( $listProduit )) {
 	<p>
 		Prix : <i><?php echo $produit['mod_price'] ?> €</i>
 	</p>
-		<?php if(isset($_SESSION['login']) && $_SESSION['login'] ['grade'] == 2){ echo '<a href="account.php?tab=2&article_id='.$produit['mod_id'].'">Modifier</a>';} ?>
+		<?php if(isset($_SESSION['login']) && $_SESSION['login'] ['grade'] == 2){
+			$nbArticle = $modelArticle->getNbArticle($produit['mod_id']);
+			echo "nbArticle";
+			var_dump($nbArticle);
+			echo '<a href="account.php?tab=2&article_id='.$produit['mod_id'].'">Modifier</a>';} ?>
+			<form>
+				<label>Stock</label>
+				<input type="number" name="qty" value=<?php echo '"'.$nbArticle['nb'].'"'; ?>>
+				<input type="submit" value="Ok">
+			</form>
+			<br/>
 		<form method="post">
 		<input type="hidden" name="buy"
-			value=<?php echo '"'.$produit['mod_id'].'"' ?>> 
+			value= <?php echo '"'.$produit['mod_id'].'"' ?> > 
 		<input type="submit"
 			value="Acheter">
 	</form>

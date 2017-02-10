@@ -50,6 +50,41 @@ class BasketController {
 
 		var_dump($_SESSION["pannier"]);
 		require_once('views/basket/form.php');
+		if (isset($_POST['adress']) && isset($_POST['city']) && isset($_POST['zip'])) {
+			require_once('classes/db.php');
+			$instancedb = DB::getinstance();
+			$requete = $instancedb->bdd->prepare('INSERT INTO ordering(order_date,order_adress,order_city,order_zip,user_id) VALUES (NOW(),:adress,:city,:zip,:id)');
+
+			$requete->execute(array(
+			'adress' => $_POST['adress'],
+			'city' => $_POST['city'],
+			'zip' => $_POST['zip'],
+			'id' => $_SESSION["login"]['id']
+		));
+
+			$requete = $instancedb->bdd->query ( "SELECT * FROM `ordering` WHERE `order_id` = LAST_INSERT_ID() ");
+			$orderInserted = $requete->fetch();
+
+			var_dump($orderInserted);
+			echo "<br>";
+			var_dump($_SESSION['pannier']);
+
+		foreach ($_SESSION['pannier'] as $item) {
+			for ($i=0; $i < $item['qty']; $i++) { 
+				
+				
+				$instancedb = DB::getinstance();
+				$requete = $instancedb->bdd->prepare('UPDATE `article` SET `order_id` = :orderid WHERE `article`.`mod_id` = :id AND `order_id` IS NULL LIMIT 1');
+
+				$requete->execute(array(
+				'orderid' => $orderInserted['order_id'],
+				'id' => $item['id']
+		));
+
+			}
+		}
+
+		}
 
 
 	}
