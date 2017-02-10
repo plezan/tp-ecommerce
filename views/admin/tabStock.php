@@ -5,12 +5,12 @@ require_once ('classes/db.php');
 if (isset ( $_GET ["article_id"] )) {
 	
 	$instancedb = DB::getinstance ();
-	$requete = $instancedb->bdd->query ( "SELECT * FROM article WHERE art_id =" . $_GET ["article_id"] );
+	$requete = $instancedb->bdd->query ( "SELECT * FROM modelearticle WHERE mod_id =" . $_GET ["article_id"] );
 	$article = $requete->fetchAll ();
 	$id = $_GET ['article_id'];
-	$nom = $article [0] ['art_name'];
-	$contenu = $article [0] ['art_description'];
-	$price = $article [0] ['art_price'];
+	$nom = $article [0] ['mod_name'];
+	$contenu = $article [0] ['mod_desc'];
+	$price = $article [0] ['mod_price'];
 	$cat = $article [0] ['cat_id'];
 	$requete = $instancedb->bdd->query ( "SELECT * FROM category" );
 	$categories = $requete->fetchAll ();
@@ -51,7 +51,7 @@ if (isset ( $_GET ["article_id"] )) {
 <?php
 }
 $instancedb = DB::getinstance ();
-$requete = $instancedb->bdd->prepare ( "UPDATE `article` SET `art_name` = :nom, `art_description` = :contenu, `art_price` = :price, `cat_id` = :categ WHERE `article`.`art_id` = :id" );
+$requete = $instancedb->bdd->prepare ( "UPDATE `modelearticle` SET `mod_name` = :nom, `mod_desc` = :contenu, `mod_price` = :price, `cat_id` = :categ WHERE `modelearticle`.`mod_id` = :id" );
 
 if (isset ( $_GET ['Nom'] ) && isset ( $_GET ['Contenu'] ) && isset ( $_GET ['Price'] ) && isset ( $_GET ['Category'] )) {
 	echo "Category defined";

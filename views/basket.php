@@ -22,13 +22,13 @@ if (! empty ( $_SESSION ['pannier'] )) {
 			<td>
 				<?php
 				$article = $ArticleModel->getArticle ( $item ['id'] );
-				echo ($article ['mod_name']);
+				echo ($article ['art_name']);
 				?>
 			</td>
 			<td>
 				<?php
 				$article = $ArticleModel->getArticle ( $item ['id'] );
-				echo ($article ['mod_price'] . " €");
+				echo ($article ['art_price'] . " €");
 				?>
 			</td>
 			<td>
@@ -57,8 +57,8 @@ if (! empty ( $_SESSION ['pannier'] )) {
 			<td>
 				<?php
 					$article = $ArticleModel->getArticle ( $item ['id'] );
-					$totalPrice += $article ['mod_price'] * $item ['qty'];
-					echo ($article ['mod_price'] * $item ['qty'] . " €");
+					$totalPrice += $article ['art_price'] * $item ['qty'];
+					echo ($article ['art_price'] * $item ['qty'] . " €");
 				?>
 			</td>
 		</tr>
