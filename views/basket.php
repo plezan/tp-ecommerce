@@ -52,6 +52,7 @@ if (!empty($_SESSION['pannier'])) {?>
 				<td>
 			<?php
 					$article = $ArticleModel->getArticle($item['id']);
+					$totalPrice+=$article['art_price']*$item['qty'];
 					echo($article['art_price']*$item['qty']." €");
 			?>
 				</td>
@@ -59,9 +60,24 @@ if (!empty($_SESSION['pannier'])) {?>
 		<?php
 		}
 		?>
+
+		<tr>
+			<th colspan="5">TOTAL :</th>
+			<td> <?php echo($totalPrice." €"); ?> </td>
+		</tr>
+
 		</table>
+		
+		<form method="GET">
+			<input type="hidden" name="void" value="1">
+			<input type="submit" value="Vider le panier">
+		</form>
+		<form method="GET">
+			<input type="hidden" name="buy" value="1">
+			<input type="submit" value="Poursuivre l'achat">
+		</form>
 	<?php
 	}else{
-		echo "lol";
+		echo "Vous n'avez rien dans votre panier";
 	}
 ?>

@@ -8,11 +8,8 @@
 	$menu = new MenuController();
 	$menu->menu();
 	require_once("controllers/BasketController.php");
+	$totalPrice = 0;
 	$basket = new BasketController();
 	$basketUpdate = $basket->basketUpdate();
-	echo "basket page";
 	require_once("views/basket.php");
-	
-	
-	
-?>
+?> 
