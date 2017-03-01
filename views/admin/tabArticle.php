@@ -4,7 +4,7 @@ $instancedb = DB::getinstance ();
 $requete = $instancedb->bdd->query ( "SELECT * FROM category" );
 $categories = $requete->fetchAll ();
 
-$requete = $instancedb->bdd->prepare ( 'INSERT INTO modelearticle (mod_name,mod_desc,mod_price,cat_id) VALUES (:name,:descr,:price,:cat)' );
+$requete = $instancedb->bdd->prepare ( 'INSERT INTO modeleArticle (mod_name,mod_desc,mod_price,cat_id) VALUES (:name,:descr,:price,:cat)' );
 if (isset ( $_POST ['name'] ) && isset ( $_POST ['descr'] ) && isset ( $_POST ['price'] ) && isset ( $_POST ['cat'] ) ) {
 	echo "Donnes completes";
 	$requete->execute ( array (
@@ -14,7 +14,7 @@ if (isset ( $_POST ['name'] ) && isset ( $_POST ['descr'] ) && isset ( $_POST ['
 			'cat' => $_POST ['cat']
 	) );
 if (isset ( $_POST ['nb'] )) {
-	$requete = $instancedb->bdd->query ( "SELECT * FROM `modelearticle` WHERE `mod_id` = LAST_INSERT_ID() ");
+	$requete = $instancedb->bdd->query ( "SELECT * FROM `modeleArticle` WHERE `mod_id` = LAST_INSERT_ID() ");
 	$modelsarticle = $requete->fetch();
 
 	$requete = $instancedb->bdd->prepare ( 'INSERT INTO article (mod_id) VALUES (:id)');

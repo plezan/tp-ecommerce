@@ -5,7 +5,7 @@ require_once ('classes/db.php');
 if (isset ( $_GET ["article_id"] )) {
 	
 	$instancedb = DB::getinstance ();
-	$requete = $instancedb->bdd->query ( "SELECT * FROM modelearticle WHERE mod_id =" . $_GET ["article_id"] );
+	$requete = $instancedb->bdd->query ( "SELECT * FROM modeleArticle WHERE mod_id =" . $_GET ["article_id"] );
 	$article = $requete->fetchAll ();
 	$id = $_GET ['article_id'];
 	$nom = $article [0] ['mod_name'];
@@ -51,7 +51,7 @@ if (isset ( $_GET ["article_id"] )) {
 <?php
 }
 $instancedb = DB::getinstance ();
-$requete = $instancedb->bdd->prepare ( "UPDATE `modelearticle` SET `mod_name` = :nom, `mod_desc` = :contenu, `mod_price` = :price, `cat_id` = :categ WHERE `modelearticle`.`mod_id` = :id" );
+$requete = $instancedb->bdd->prepare ( "UPDATE `modeleArticle` SET `mod_name` = :nom, `mod_desc` = :contenu, `mod_price` = :price, `cat_id` = :categ WHERE `modeleArticle`.`mod_id` = :id" );
 
 if (isset ( $_GET ['Nom'] ) && isset ( $_GET ['Contenu'] ) && isset ( $_GET ['Price'] ) && isset ( $_GET ['Category'] )) {
 	echo "Category defined";

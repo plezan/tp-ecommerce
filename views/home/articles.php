@@ -13,7 +13,6 @@ if (empty ( $listProduit )) {
 		<?php if(!empty($_SESSION['login']) && $_SESSION['login'] ['grade'] == 2){
 			$nbArticle = $modelArticle->getNbArticle($produit['mod_id']);
 			echo "nbArticle";
-			var_dump($nbArticle);
 			echo '<a href="account.php?tab=2&article_id='.$produit['mod_id'].'">Modifier</a>'; ?>
 			<form>
 				<label>Stock</label>

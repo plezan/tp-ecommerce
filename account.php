@@ -6,7 +6,7 @@ $head->head ();
 require_once ('controllers/MenuController.php');
 $menu = new MenuController ();
 $menu->menu ();
-require_once ('controllers\Account\AdminController.php');
+require_once ('controllers/Account/AdminController.php');
 $AdminController = new AdminController ();
 if (! isset ( $_SESSION ["login"] ['grade'] ) || $_SESSION ["login"] ['grade'] == 0) {
 	unset($_SESSION['login']);

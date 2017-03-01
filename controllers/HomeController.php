@@ -32,8 +32,6 @@ class HomeController {
 			
 			
 		}
-		/*if (isset($_SESSION['login']) && $_SESSION['login']['grade']=2) {
-			$nbItem = 	}*/
 	}
 }
 ?>

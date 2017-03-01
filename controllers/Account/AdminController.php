@@ -20,8 +20,7 @@ class AdminController {
 			header('Location: account.php');
 		}
 		
-		require_once('views\admin\admin.php');
-		//require_once('')
+		require_once('views/admin/admin.php');
 	}
 }
 ?>
