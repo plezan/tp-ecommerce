@@ -5,13 +5,19 @@ require_once ('classes/db.php');
 if (isset ( $_GET ["article_id"] )) {
 	
 	$instancedb = DB::getinstance ();
-	$requete = $instancedb->bdd->query ( "SELECT * FROM modeleArticle WHERE mod_id =" . $_GET ["article_id"] );
+	$requete = $instancedb->bdd->prepare ( "SELECT * FROM modeleArticle WHERE mod_id = :art_id");
+	$requete->execute(array(
+				'art_id' => $_GET ["article_id"] 
+			));
 	$article = $requete->fetchAll ();
-	$id = $_GET ['article_id'];
-	$nom = $article [0] ['mod_name'];
-	$contenu = $article [0] ['mod_desc'];
-	$price = $article [0] ['mod_price'];
-	$cat = $article [0] ['cat_id'];
+	if (!empty($article)) {
+		$id = $_GET ['article_id'];
+		$nom = $article [0] ['mod_name'];
+		$contenu = $article [0] ['mod_desc'];
+		$price = $article [0] ['mod_price'];
+		$cat = $article [0] ['cat_id'];
+	}
+	
 	$requete = $instancedb->bdd->query ( "SELECT * FROM category" );
 	$categories = $requete->fetchAll ();
 	

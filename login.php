@@ -15,7 +15,10 @@ if (! isset ( $_SESSION['login']['grade'] ) || $_SESSION['login']['grade'] == 0)
 		header ( 'Location: account.php' );
 		require_once ('classes/db.php');
 		$instancedb = DB::getinstance ();
-		$req = $instancedb->bdd->query ( "SELECT * FROM user WHERE user_email LIKE '" . $_POST ["id"] . "'" );
+		$req = $instancedb->bdd->prepare( "SELECT * FROM user WHERE user_email LIKE :id" );
+		$req->execute(array(
+			'id' => $_POST['id']
+		));
 		$result = $req->fetch ();
 		echo "req = ";
 		echo $result ['user_password'] . "<br>User grade = ";
