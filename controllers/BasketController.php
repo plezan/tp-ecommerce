@@ -7,7 +7,13 @@ class BasketController {
 			if (!isset($_SESSION["login"]['id'])) {
 				require_once('views/login/toLogin.php');
 			} else {
-				$this->basketConfirm();
+				if ($_GET['buy']>1) {
+					$this->getFacture($_GET['buy']);
+				} else {
+					$this->basketConfirm();
+				}
+				
+				
 			}
 		}else{
 			$this->defaultBasket();
@@ -59,28 +65,48 @@ class BasketController {
 			'city' => $_POST['city'],
 			'zip' => $_POST['zip'],
 			'id' => $_SESSION["login"]['id']
-		));
+			));
 
-			$requete = $instancedb->bdd->query ( "SELECT * FROM `ordering` WHERE `order_id` = LAST_INSERT_ID() ");
-			$orderInserted = $requete->fetch();
+				$requete = $instancedb->bdd->query ( "SELECT * FROM `ordering` WHERE `order_id` = LAST_INSERT_ID() ");
+				$orderInserted = $requete->fetch();
 
-		foreach ($_SESSION['pannier'] as $item) {
-			for ($i=0; $i < $item['qty']; $i++) { 
-				
-				
-				$instancedb = DB::getinstance();
-				$requete = $instancedb->bdd->prepare('UPDATE `article` SET `order_id` = :orderid WHERE `article`.`mod_id` = :id AND `order_id` IS NULL LIMIT 1');
+			foreach ($_SESSION['pannier'] as $item) {
+				for ($i=0; $i < $item['qty']; $i++) { 
+					
+					
+					$instancedb = DB::getinstance();
+					$requete = $instancedb->bdd->prepare('UPDATE `article` SET `order_id` = :orderid WHERE `article`.`mod_id` = :id AND `order_id` IS NULL LIMIT 1');
 
-				$requete->execute(array(
-				'orderid' => $orderInserted['order_id'],
-				'id' => $item['id']
-		));
+					$requete->execute(array(
+					'orderid' => $orderInserted['order_id'],
+					'id' => $item['id']
+					));
 
+				}
 			}
-		}
+			header("Location: ?buy=".$orderInserted['order_id']);
+			echo "string";
 
 		}
 
+
+	}
+
+	public function getFacture($id){
+		require_once('classes/db.php');
+		$instancedb = DB::getinstance();
+		$requete = $instancedb->bdd->prepare("SELECT * FROM `ordering` INNER JOIN user ON ordering.user_id = user.user_id WHERE `order_id`=:id");
+
+		$requete->execute(array(
+			'id' => $id
+		));
+		$factureData = $requete->fetch();
+
+		require_once ("models/ArticleModel.php");
+		$ArticleModel = new ArticleModel ();
+		$totalPrice = 0;
+		
+		require_once("views/basket/facture.php");
 
 	}
 }
