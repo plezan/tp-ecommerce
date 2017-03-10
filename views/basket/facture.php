@@ -33,7 +33,7 @@ if (! empty ( $_SESSION ['pannier'] )) {
 	</strong>
 </div>
 <h2>Facture N° <?php echo "00"+$factureData['order_id']; ?> datant du <?php echo $factureData['order_date']; ?></h2>
-<table>
+<table style="width: 100%;">
 	<tr style="
     background-color: gray;">
 		<th>Libelé Article</th>
@@ -89,7 +89,8 @@ if (! empty ( $_SESSION ['pannier'] )) {
 
 </table>
 
-<p>Signature : </p>
+<p>Signature : </p><br/><br/>
+	<button onClick="print()">Imprimer</button>
 
 <?php
 } else {
